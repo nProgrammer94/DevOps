@@ -33,4 +33,5 @@ systemctl start kubelet
 systemctl enable docker
 systemctl start docker
 
-echo hostname
+hs=`hostname`
+echo $hs
