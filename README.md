@@ -1,3 +1,3 @@
 # DevOps
 
-Cài đặt K8s trên CentOs 8
+Cài đặt K8s trên CentOs 7

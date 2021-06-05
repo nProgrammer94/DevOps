@@ -1,0 +1,12 @@
+# Add VirtualBox / EPEL repository
+echo "================ Download VirtualBox ================"
+wget https://www.virtualbox.org/download/oracle_vbox.asc
+rpm --import oracle_vbox.asc
+mkdir /etc/yum.repo.d/
+cd /etc/yum.repo.d/
+wget http://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo 11.
+echo "================ Install VirtualBox ================"
+yum install -y VirtualBox-6.0
+yum install kernel-devel - y
+reboot
+echo "================ Complete ================"
