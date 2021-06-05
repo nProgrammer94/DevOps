@@ -1,2 +1,2 @@
 cd /root/scripts
-sudo sh Step2.InstallKubernetes.sh
+sudo sh Step2.InstallKubernetes.sh 2

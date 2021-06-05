@@ -1,6 +1,11 @@
 echo "================ Prepare Hostname, Firewall and SELinux ================"
-
-hostnamectl set-hostname 'node-'$nodeName
+source /root/scripts/enviroment.yml
+if [ $1 == 1 ]
+then
+    hostnamectl set-hostname  $WORKER_1_NAME
+else
+    hostnamectl set-hostname  $WORKER_2_NAME
+fi
 source /root/scripts/enviroment.yml
 cat <<EOF>> /etc/hosts
 $MASTER_IP master-node
