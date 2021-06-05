@@ -6,6 +6,7 @@ then
 else
     hostnamectl set-hostname  $WORKER_2_NAME
 fi
+
 source /root/scripts/enviroment
 cat <<EOF>> /etc/hosts
 $MASTER_IP master-node
@@ -31,3 +32,5 @@ systemctl enable kubelet
 systemctl start kubelet
 systemctl enable docker
 systemctl start docker
+
+echo hostname
