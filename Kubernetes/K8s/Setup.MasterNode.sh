@@ -1,7 +1,6 @@
 echo "================ Prepare Hostname, Firewall and SELinux ================"
-cd /var/scripts
-source enviroment.yml
 hostnamectl set-hostname master-node
+source /var/scripts/enviroment.yml
 cat <<EOF>> /etc/hosts
 $MASTER_IP master-node
 $WORKER_1_IP node-1 worker-node-1
