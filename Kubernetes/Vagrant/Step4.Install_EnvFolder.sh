@@ -6,4 +6,3 @@ sudo vagrant init
 sudo vagrant plugin install vagrant-vbguest
 sudo yum -y install rsync
 sudo sh /root/scripts/Step5.ConfigMaster.sh
-echo "================ Complete ================"

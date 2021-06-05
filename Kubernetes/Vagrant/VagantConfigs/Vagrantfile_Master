@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+require 'yaml'
+settings = YAML.load_file '/root/scripts/Configs/VagrantSettings.yml'
+ 
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.network "private_network", ip: settings['IP_MASTER']
+  config.vm.hostname = "master.xtl"
+
+  config.vm.provider "virtualbox" do |vb|
+     vb.name = "master.xtl"
+     vb.cpus = settings['MASTER_CPU']
+     vb.memory = settings['MASTER_RAM']
+  end
+  
+  config.vm.provision "shell", path: "./../install-docker-kube.sh"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    echo settings['PASSWORD_MASTER'] | passwd --stdin root
+    sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+    systemctl reload sshd
+
+cat >>/etc/hosts<<EOF
+settings['IP_MASTER']  master.xtl
+settings['IP_WORKER_1'] worker1.xtl
+settings['IP_WORKER_2'] worker2.xtl
+EOF
+
+  SHELL
+end

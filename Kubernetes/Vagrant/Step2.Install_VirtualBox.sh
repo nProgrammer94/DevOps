@@ -7,6 +7,7 @@ cd /etc/yum.repo.d/
 wget http://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
 echo "================ Install VirtualBox ================"
 yum install VirtualBox-6.0 -y
+yum groupinstall "Development tools" -y
 yum install kernel-devel -y
 reboot
 echo "================ Complete ================"
