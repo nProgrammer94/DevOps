@@ -3,8 +3,8 @@ hostnamectl set-hostname master-node
 source /root/scripts/enviroment.yml
 cat <<EOF>> /etc/hosts
 $MASTER_IP master-node
-$WORKER_1_IP node-1 worker-node-1
-$WORKER_2_IP node-2 worker-node-2
+$WORKER_1_IP $WORKER_1_NAME worker-$WORKER_1_NAME
+$WORKER_2_IP $WORKER_2_NAME worker-$WORKER_2_NAME
 EOF
 
 setenforce 0
