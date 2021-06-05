@@ -1,4 +1,5 @@
 echo "================ Prepare Hostname, Firewall and SELinux ================"
+swapoff -a
 source /root/scripts/enviroment
 if [ $1 == 1 ]
 then
