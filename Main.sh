@@ -2,7 +2,13 @@ sudo yum -y install git
 git clone https://github.com/nProgrammer94/DevOps.git
 mkdir /root/scripts
 
-sudo rm -rf /root/DevOps
+rm -rf /root/DevOps
+rm -rf /root/k8s_Master_Step1.sh
+rm -rf /root/k8s_Master_Step2.sh
+rm -rf /root/k8s_Worker_Step1.sh
+rm -rf /root/k8s_Worker_Step2.sh
+rm -rf /root/vagrant_Step1.sh
+rm -rf /root/vagrant_Step2.sh
 
 echo "======== Functions ========"
 echo "1. Vagrant"
