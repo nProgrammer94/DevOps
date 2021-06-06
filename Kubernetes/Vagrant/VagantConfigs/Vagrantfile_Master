@@ -15,7 +15,7 @@ Vagrant.configure("2") do |config|
      vb.memory = settings['MASTER_RAM']
   end
   
-  config.vm.provision "shell", path: "./../install-docker-kube.sh"
+#  config.vm.provision "shell", path: "./../install-docker-kube.sh"
 
   config.vm.provision "shell", inline: <<-SHELL
     echo settings['PASSWORD_MASTER'] | passwd --stdin root

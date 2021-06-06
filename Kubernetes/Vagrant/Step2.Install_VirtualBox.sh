@@ -9,5 +9,4 @@ echo "================ Install VirtualBox ================"
 yum install VirtualBox-6.0 -y
 yum groupinstall "Development tools" -y
 yum install kernel-devel -y
-reboot
-echo "================ Complete ================"
+sudo Step3.Install_Vagrannt.sh
