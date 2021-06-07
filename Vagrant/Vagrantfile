@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
      vb.memory = "4096"
   end 
   
-  config.vm.provision "shell", path: "./../install-docker-kube.sh"
+  config.vm.provision "shell", path: "./common.sh"
 
   config.vm.provision "shell", inline: <<-SHELL
     echo "11052194" | passwd --stdin root
