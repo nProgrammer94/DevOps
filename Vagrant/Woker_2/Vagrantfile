@@ -2,14 +2,16 @@
 # vi: set ft=ruby :
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
-  config.vm.network "private_network", ip: "172.16.10.100"
-  config.vm.network "public_network", ip: "10.0.4.218"
+  # Local IP
+  # config.vm.network "private_network", ip: "172.16.10.102"
+  #Public IP
+  config.vm.network "public_network", ip: "10.0.4.223"
 
-  config.vm.hostname = "master.xtl"
+  config.vm.hostname = "cantho.xtl"
   config.vm.provider "virtualbox" do |vb|
-     vb.name = "master.xtl"
+     vb.name = "cantho.xtl"
      vb.cpus = 2
-     vb.memory = "4096"
+     vb.memory = "2048"
   end 
   
   config.vm.provision "shell", path: "./common.sh"

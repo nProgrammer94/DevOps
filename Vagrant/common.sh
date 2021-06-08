@@ -1,4 +1,8 @@
 sudo yum install -y epel-release
+sudo yum install -y htop
+yum install -y net-tools
+
+sudo route add default gw 10.0.0.254 eth2
 # Tat SELinux
 setenforce 0
 sed -i --follow-symlinks 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux

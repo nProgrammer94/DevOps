@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  # Local IP
+  config.vm.network "private_network", ip: "172.16.10.100"
+  #Public IP
+  config.vm.network "public_network", ip: "10.0.4.221"
+
+  config.vm.hostname = "master.xtl"
+  config.vm.provider "virtualbox" do |vb|
+     vb.name = "master.xtl"
+     vb.cpus = 2
+     vb.memory = "4096"
+  end 
+  
+  config.vm.provision "shell", path: "./common.sh"
+
+  config.vm.provision "shell", inline: <<-SHELL
+    echo "11052194" | passwd --stdin root
+    sudo sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+    sudo sed -i 's/^#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
+    systemctl reload sshd
+    systemctl disable firewalld
+    systemctl stop firewalld
+  SHELL
+end
