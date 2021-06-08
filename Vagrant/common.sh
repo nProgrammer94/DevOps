@@ -2,10 +2,13 @@ sudo yum install -y epel-release
 sudo yum install -y htop
 yum install -y net-tools
 
-sudo route add default gw 10.0.0.254 eth2
+echo -e "GATEWAY=10.0.0.254"  >> /etc/sysconfig/network-scripts/ifcfg-eth2
+sudo systemctl restart NetworkManager.service
+
 # Tat SELinux
 setenforce 0
 sed -i --follow-symlinks 's/^SELINUX=enforcing/SELINUX=disabled/' /etc/sysconfig/selinux
+
 
 # Tat Firewall
 systemctl disable firewalld >/dev/null 2>&1
