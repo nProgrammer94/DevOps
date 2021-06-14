@@ -9,9 +9,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.hostname = "saigon.xtl"
   config.vm.provider "virtualbox" do |vb|
-     vb.name = "saigon.xtl"
-     vb.cpus = 2
-     vb.memory = "2048"
+    vb.name = "saigon.xtl"
+    vb.cpus = 2
+    vb.memory = "2048"
   end 
   
   config.vm.provision "shell", path: "./common.sh"

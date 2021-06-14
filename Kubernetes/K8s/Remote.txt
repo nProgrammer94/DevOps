@@ -1,3 +1,4 @@
 1. Để kết nối đến Cluster
     + Cài đặt kubectl trên máy cá nhân (https://kubernetes.io/vi/docs/tasks/tools/install-kubectl/).
-    + Copy file config trên vm master  
+    + Copy file config trên vm master  (/root/.kube/config)
+    + overwrite lên file config trên máy dev (C:\Users\NamHT\.kube)
