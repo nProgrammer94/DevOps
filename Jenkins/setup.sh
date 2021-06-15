@@ -7,4 +7,4 @@ sudo systemctl start docker
 
 # Setup 
 
-docker run -d -p 80:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
+docker run -d -p 80:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-centos7

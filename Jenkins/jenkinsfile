@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+      stage('Install dotnet')
+      {
+        steps
+        {            
+          sh ''' 
+            export version=`dotnet --version`
+            if test `echo $version | grep -c command not found`
+            then
+              echo "Install Dotnet"
+              rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+              sudo yum install dotnet-sdk-3.1
+            fi
+            '''
+        }
+      }      
+      stage('Clean Source')
+      {
+        steps
+        {
+          sh 'echo "Clean Workspace"'
+          sh '''          
+            rm -rf $WORKSPACE/*          
+          '''
+        }
+      }
+      stage('Checkout') {
+          steps {
+            echo 'Checkout'
+            git branch: 'develop', url:'https://namht:N%40mhtgc60226@glc.unit.vn/vinbus/afc_vinbus.git'
+          }
+      }
+      stage('build') {
+        steps {
+            sh '''
+            export comment=`git log -1  --pretty='%s'`
+            if [[ "$comment" == *"jk"* ]];
+            then
+              ls $WORKSPACE/
+              cd $WORKSPACE/BE/nCanary.Framework
+              dotnet build                  
+            fi
+            '''          
+              }
+            }       
+    }
+}
