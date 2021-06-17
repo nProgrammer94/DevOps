@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # tên của deployment
+  name: checkinpro-fe
+spec:
+  # số POD tạo ra
+  replicas: 1
+
+  # thiết lập các POD do deploy quản lý, là POD có nhãn  "app=deployapp"
+  selector:
+    matchLabels:
+      app: checkinpro-fe
+
+  # Định nghĩa mẫu POD, khi cần Deploy sử dụng mẫu này để tạo Pod
+  template:
+    metadata:
+      name: podapp
+      labels:
+        app: checkinpro-fe
+    spec:
+      containers:
+        - name: node
+          image: registry.unit.vn/checkinpro-api:0.1
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+          ports:
+            - containerPort: 80

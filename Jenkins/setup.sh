@@ -5,6 +5,12 @@ sudo yum-config-manager \
 sudo yum install -y docker-ce docker-ce-cli containerd.io
 sudo systemctl start docker
 
-# Setup 
+# Setup Jenkis
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+sudo yum upgrade -y
+sudo yum install -y jenkins java-11-openjdk-devel
+sudo systemctl daemon-reload
 
-docker run -d -p 80:8080 -p 50000:50000 -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-centos7
+# SSH
+sudo docker exec -u root -it <containerName> /bin/bash

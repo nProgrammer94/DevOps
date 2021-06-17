@@ -1,50 +1,50 @@
 pipeline {
     agent any
-
-    stages {
-      stage('Install dotnet')
-      {
-        steps
-        {            
-          sh ''' 
-            export version=`dotnet --version`
-            if test `echo $version | grep -c command not found`
-            then
-              echo "Install Dotnet"
-              rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
-              sudo yum install dotnet-sdk-3.1
-            fi
-            '''
-        }
-      }      
-      stage('Clean Source')
-      {
+    stages {    
+    stage('Clean Source')
+    {
         steps
         {
-          sh 'echo "Clean Workspace"'
-          sh '''          
+            slackSend channel: '#jenkins', message: 'Em lụm source deploy đây :grin:'
+            sh 'echo "Clean Workspace"'
+            sh '''          
             rm -rf $WORKSPACE/*          
-          '''
+            '''
         }
-      }
-      stage('Checkout') {
-          steps {
+    }
+
+    stage('Checkout') {
+        steps {
             echo 'Checkout'
             git branch: 'develop', url:'https://namht:N%40mhtgc60226@glc.unit.vn/vinbus/afc_vinbus.git'
-          }
-      }
-      stage('build') {
+        }
+    }
+    
+    stage('build') {
         steps {
             sh '''
-            export comment=`git log -1  --pretty='%s'`
-            if [[ "$comment" == *"jk"* ]];
-            then
-              ls $WORKSPACE/
-              cd $WORKSPACE/BE/nCanary.Framework
-              dotnet build                  
-            fi
+                export comment=`git log -1  --pretty='%s'`
+                if [[ "$comment" == *"jk"* ]];
+                then
+                cd $WORKSPACE/BE/nCanary.Framework
+                dotnet build                  
+                fi
             '''          
-              }
-            }       
+            }
+        }
+    
+    stage('build Docker') {
+        steps {
+            sh 'cd $WORKSPACE/BE/nCanary.Framework && docker build -t registry.gitlab.com/vinbus1/afc_api:5.${BUILD_NUMBER} .'
+            sh 'docker push registry.gitlab.com/vinbus1/afc_api:5.${BUILD_NUMBER}'
+            slackSend channel: '#jenkins', message: "deploy xong roài đại ca. Image: registry.gitlab.com/vinbus1/afc_api:5.${env.BUILD_NUMBER}"
+            }
+        }
+
+    stage('build ') {
+
+    }
+
+
     }
 }
