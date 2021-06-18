@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+
+    stages {  
+
+        stage('Clean Source')
+        {
+            steps
+            {                
+                sh 'echo "Clean Workspace"'
+                sh '''          
+                rm -rf $WORKSPACE/*          
+                '''
+            }
+        }
+
+        stage('Checkout') {
+            steps {
+                git branch: 'version_2', url:'https://namht:N%40mhtgc60226@glc.unit.vn/checkinpro/checkinpro.git'
+            }
+        }
+        
+        stage('build') {
+            steps {
+                sh '''
+                    export comment=`git log -1  --pretty='%s'`
+                    if [[ "$comment" == *"jk"* ]];
+                    then                    
+                    cd $WORKSPACE/FE
+                    yarn && yarn build                  
+                    fi
+                '''          
+                }
+            }
+
+        stage('build Docker') {
+            steps {
+                sh 'cd $WORKSPACE/FE && docker build -t registry.unit.vn/checkinpro-fe:2.${BUILD_NUMBER} .'
+                sh 'docker login -u namht -p 11052194 registry.unit.vn && docker push registry.unit.vn/checkinpro-fe:2.${BUILD_NUMBER}'
+                slackSend channel: '#jenkins', message: "Build image thành công. Image: registry.unit.vn/checkinpro-fe:2.${BUILD_NUMBER}"
+                }
+        }
+
+        stage('Push K8s') {
+            steps {
+                sh 'kubectl config set-context --current --namespace=checkinpro'
+                sh 'kubectl set image deployment/checkinpro-fe node=registry.unit.vn/checkinpro-fe:2.${BUILD_NUMBER} --record'
+                slackSend channel: '#jenkins', message: "Deploy lên K8s thành công!"
+                }
+        }
+    }
+}
